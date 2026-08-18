@@ -44,9 +44,10 @@ export const Route = createFileRoute("/api/public/state")({
           .eq("id", ROW_ID)
           .maybeSingle();
         if (error) return json({ error: error.message }, 500);
-        if (!data) return json({ revision: 0, state: null });
+        if (!data) return json({ revision: 0, version: 0, state: null });
         return json({
           revision: Number(data.revision),
+          version: Number(data.revision),
           state: data.state,
           updatedAt: data.updated_at,
         });
@@ -141,7 +142,12 @@ export const Route = createFileRoute("/api/public/state")({
             .eq("id", actor.userId);
         }
 
-        return json({ revision: nextRevision, savedAt: new Date().toISOString() });
+        return json({
+          success: true,
+          revision: nextRevision,
+          version: nextRevision,
+          savedAt: new Date().toISOString(),
+        });
       },
     },
   },
