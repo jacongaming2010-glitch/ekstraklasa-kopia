@@ -142,7 +142,12 @@ export const Route = createFileRoute("/api/public/state")({
             .eq("id", actor.userId);
         }
 
-        return json({ revision: nextRevision, savedAt: new Date().toISOString() });
+        return json({
+          success: true,
+          revision: nextRevision,
+          version: nextRevision,
+          savedAt: new Date().toISOString(),
+        });
       },
     },
   },
