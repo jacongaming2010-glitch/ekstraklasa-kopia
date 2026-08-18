@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PolitykaPrywatnosciRouteImport } from './routes/polityka-prywatnosci'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
+import { Route as ApiPublicAuditLogsRouteImport } from './routes/api/public/audit-logs'
 import { Route as ApiPublicStateRouteImport } from './routes/api/public/state'
 
 const IndexRoute = IndexRouteImport.update({
@@ -40,6 +41,11 @@ const AuthenticatedPanelRoute = AuthenticatedPanelRouteImport.update({
   path: '/panel',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicAuditLogsRoute = ApiPublicAuditLogsRouteImport.update({
+  id: '/api/public/audit-logs',
+  path: '/api/public/audit-logs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicStateRoute = ApiPublicStateRouteImport.update({
   id: '/api/public/state',
   path: '/api/public/state',
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/api/public/audit-logs': typeof ApiPublicAuditLogsRoute
   '/api/public/state': typeof ApiPublicStateRoute
 }
 export interface FileRoutesByTo {
@@ -58,6 +65,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/api/public/audit-logs': typeof ApiPublicAuditLogsRoute
   '/api/public/state': typeof ApiPublicStateRoute
 }
 export interface FileRoutesById {
@@ -67,14 +75,26 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
+  '/api/public/audit-logs': typeof ApiPublicAuditLogsRoute
   '/api/public/state': typeof ApiPublicStateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/polityka-prywatnosci' | '/panel' | '/api/public/state'
+    | '/'
+    | '/auth'
+    | '/polityka-prywatnosci'
+    | '/panel'
+    | '/api/public/audit-logs'
+    | '/api/public/state'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/polityka-prywatnosci' | '/panel' | '/api/public/state'
+  to:
+    | '/'
+    | '/auth'
+    | '/polityka-prywatnosci'
+    | '/panel'
+    | '/api/public/audit-logs'
+    | '/api/public/state'
   id:
     | '__root__'
     | '/'
@@ -82,6 +102,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/polityka-prywatnosci'
     | '/_authenticated/panel'
+    | '/api/public/audit-logs'
     | '/api/public/state'
   fileRoutesById: FileRoutesById
 }
@@ -90,6 +111,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   PolitykaPrywatnosciRoute: typeof PolitykaPrywatnosciRoute
+  ApiPublicAuditLogsRoute: typeof ApiPublicAuditLogsRoute
   ApiPublicStateRoute: typeof ApiPublicStateRoute
 }
 
@@ -130,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPanelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/audit-logs': {
+      id: '/api/public/audit-logs'
+      path: '/api/public/audit-logs'
+      fullPath: '/api/public/audit-logs'
+      preLoaderRoute: typeof ApiPublicAuditLogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/state': {
       id: '/api/public/state'
       path: '/api/public/state'
@@ -156,6 +185,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   PolitykaPrywatnosciRoute: PolitykaPrywatnosciRoute,
+  ApiPublicAuditLogsRoute: ApiPublicAuditLogsRoute,
   ApiPublicStateRoute: ApiPublicStateRoute,
 }
 export const routeTree = rootRouteImport
