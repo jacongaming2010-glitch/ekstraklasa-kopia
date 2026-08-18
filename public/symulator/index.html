@@ -820,7 +820,10 @@ function Q1(){
       s.view === "academy" && l.jsx(rg, {}),
       s.view === "match" && l.jsx(ug, {}),
       s.view === "player" && l.jsx(cg, {}),
-      s.view === "audit" && l.jsx(AuditLogViewer, {}),
+      s.view === "player" && l.jsx(PositionSwitchCard, {}),
+      s.view === "audit" && (c
+        ? l.jsx(AuditLogViewer, {})
+        : l.jsx("div", { className: "rounded-2xl border border-rose-400/30 bg-rose-500/10 p-6 text-sm text-rose-200", children: "🔒 Historia zmian jest dostępna tylko dla administratora." })),
       s.view === "admin" && l.jsx($1, {})
     ]})
   ]});
