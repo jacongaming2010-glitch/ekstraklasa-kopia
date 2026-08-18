@@ -349,7 +349,9 @@
       })
       .then(function (d) {
         if (!d || !d.state) return;
-        version = typeof d.version === "number" ? d.version : version;
+        var v = typeof d.version === "number" ? d.version : version;
+        if (type !== "INIT" && v === version) return; // brak nowszej wersji
+        version = v;
         render();
         var msg = JSON.stringify({
           type: type === "INIT" ? "INIT" : "STATE_UPDATED",
